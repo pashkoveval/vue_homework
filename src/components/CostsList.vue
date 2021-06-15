@@ -12,12 +12,18 @@
         <input type="date" :value="date" disabled />
       </td>
       <td>
-        <span>{{category}}</span>
-        <select>
-          <option :selected="category" v-for="option in GET_OPTIONS" :key="option">{{option}}</option>
+        <select v-model="COSTS_LIST[i].category" disabled>
+          <option
+            :selected="category"
+            v-for="option in GET_OPTIONS"
+            :key="option"
+            :value="option"
+          >{{option}}</option>
         </select>
       </td>
-      <td>{{value}} $</td>
+      <td>
+        <input type="number" :value="value" disabled />
+      </td>
       <button class="del" @click="deleteCost(i)">&#9249;</button>
     </tr>
   </div>
@@ -30,13 +36,16 @@ export default {
     return {};
   },
   methods: {
-    ...mapMutations(["DELETE_COST_FROM_COSTS"]),
+    ...mapMutations(["DELETE_COST_FROM_COSTS", "FILTER_COSTS"]),
     deleteCost(cost) {
       this.DELETE_COST_FROM_COSTS(cost);
     },
   },
   computed: {
     ...mapGetters(["COSTS_LIST", "GET_OPTIONS"]),
+  },
+  mounted() {
+    this.FILTER_COSTS();
   },
 };
 </script>
@@ -48,10 +57,15 @@ export default {
 td {
   width: 150px;
   padding: 1rem;
-  & input {
+  & input,
+  & select {
     background: none;
     border: none;
     font-size: 1rem;
+    text-align: center;
+  }
+  & select:disabled {
+    color: #000;
   }
 }
 .cost {

@@ -1,29 +1,23 @@
 <template>
   <div class="home">
-    <button class="add-cost" @click="showCost = !showCost">
-      Add New Cost
-      <span v-if="!showCost">+</span>
-      <span v-else>-</span>
-    </button>
-    <InputCost v-if="showCost" />
-    <CostsList />
+    <h2>Most popular spending</h2>
+    <div class="links">
+      <router-link
+        class="qlink"
+        v-for="({name,value},i) in POPULAR_COSTS"
+        :key="i"
+        :to="`/add/payment/${name}?value=${value}`"
+      >{{name}} {{value}}$</router-link>
+    </div>
   </div>
 </template>
 
 <script>
-import InputCost from "../components/InputCost";
-import CostsList from "../components/CostsList";
-
+import { mapGetters } from "vuex";
 export default {
   name: "Home",
-  data() {
-    return {
-      showCost: true,
-    };
-  },
-  components: {
-    InputCost,
-    CostsList,
+  computed: {
+    ...mapGetters(["POPULAR_COSTS"]),
   },
 };
 </script>
@@ -37,5 +31,22 @@ export default {
   &:active {
     transform: scale(0.9);
   }
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+}
+
+.qlink {
+  display: block;
+  width: 100px;
+  height: 30px;
+  border: 1px solid rgb(149, 247, 84);
+  background: rgb(149, 247, 84);
+  margin: 1rem;
+  line-height: 30px;
+  text-decoration: none;
+  color: inherit;
 }
 </style>
