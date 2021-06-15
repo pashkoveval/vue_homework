@@ -1,0 +1,19 @@
+<template>
+  <div class="home">
+    <CostWrapper />
+  </div>
+</template>
+
+<script>
+import CostWrapper from "../components/CostWrapper";
+
+export default {
+  name: "Dashboard",
+  components: {
+    CostWrapper,
+  },
+};
+</script>
+
+<style lang="scss" >
+</style>
