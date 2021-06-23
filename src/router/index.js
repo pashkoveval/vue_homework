@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import About from '../views/About.vue'
-import Page404 from '../views/Page404.vue'
 
 Vue.use(VueRouter)
 
@@ -15,12 +13,19 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: About
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/dashboard/:id',
+    name: 'Dashboard',
+    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue')
   },
   {
     path: '*',
-    component: Page404
-  }
+    name: 'Error',
+    component: () => import(/* webpackChunkName: "Page404" */ '../views/Page404.vue')
+  },
+
 ]
 
 const router = new VueRouter({
