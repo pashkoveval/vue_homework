@@ -1,8 +1,11 @@
 <template>
-  <div id="app">
-    <Header />
-    <router-view />
-  </div>
+  <v-app>
+    <Header/> 
+    <v-spacer></v-spacer>
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 <script>
 import Header from "./components/Header";
@@ -11,16 +14,3 @@ export default {
   components: { Header },
 };
 </script>
-
-<style lang="scss">
-* {
-  transition: all 0.3s;
-}
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-</style>

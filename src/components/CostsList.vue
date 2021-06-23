@@ -12,31 +12,51 @@
         <input type="date" :value="date" disabled />
       </td>
       <td>
-        <span>{{category}}</span>
-        <select>
-          <option :selected="category" v-for="option in GET_OPTIONS" :key="option">{{option}}</option>
+        <select v-model="COSTS_LIST[i].category" disabled>
+          <option
+            :selected="category"
+            v-for="option in GET_OPTIONS"
+            :key="option"
+            :value="option"
+          >{{option}}</option>
         </select>
       </td>
-      <td>{{value}} $</td>
+      <td>
+        <input type="number" :value="value" disabled />
+      </td>
       <button class="del" @click="deleteCost(i)">&#9249;</button>
     </tr>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      search: "",
+      headers: [
+        {
+          text: "#",
+          align: "start",
+          sortable: true,
+          value: "idx",
+        },
+        { text: "Date", value: "date" },
+        { text: "Category", value: "category" },
+        { text: "Value", value: "value" },
+      ],
+    };
   },
   methods: {
-    ...mapMutations(["DELETE_COST_FROM_COSTS"]),
-    deleteCost(cost) {
-      this.DELETE_COST_FROM_COSTS(cost);
+    deleteCost(costToDel) {
+      this.FILTRATION({ costToDel });
     },
+    setData() {},
   },
   computed: {
-    ...mapGetters(["COSTS_LIST", "GET_OPTIONS"]),
+    ...mapGetters(["COSTS_LIST", "GET_OPTIONS", "COSTS"]),
+    ...mapActions(["FILTRATION"]),
   },
 };
 </script>
@@ -48,10 +68,15 @@ export default {
 td {
   width: 150px;
   padding: 1rem;
-  & input {
+  & input,
+  & select {
     background: none;
     border: none;
     font-size: 1rem;
+    text-align: center;
+  }
+  & select:disabled {
+    color: #000;
   }
 }
 .cost {

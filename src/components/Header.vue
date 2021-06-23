@@ -1,8 +1,13 @@
 <template>
-  <div class="nav">
-    <router-link to="/">Dashboard</router-link>
-    <router-link to="/about">About</router-link>
-  </div>
+  <v-app-bar app color="blue lighten-1">
+    <v-toolbar-title>Page title</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-btn to="/" text>Home</v-btn>
+    <v-btn to="/dashboard" text>Dashboard</v-btn>
+    <v-btn to="/about" text>About</v-btn>
+    <v-spacer></v-spacer>
+    <v-switch class="m-auto" inset></v-switch>
+  </v-app-bar>
 </template>
 
 <script>
@@ -10,18 +15,4 @@ export default {};
 </script>
 
 <style lang="scss">
-.nav {
-  padding: 30px;
-
-  & a {
-    font-weight: bold;
-    color: #2c3e50;
-    text-decoration: none;
-    margin: 0 1rem;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>
