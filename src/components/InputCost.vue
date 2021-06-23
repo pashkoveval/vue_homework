@@ -7,7 +7,8 @@
       </label>
       <label>
         Category
-        <select v-model="category"  placeholder="Category">
+        <select v-model="category">
+          <option value></option>
           <option v-for="(option, i) in GET_OPTIONS" :key="i" :value="option">{{option}}</option>
         </select>
       </label>
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapActions  } from "vuex";
 export default {
   data() {
     return {
@@ -31,12 +32,12 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["SET_NEW_COST_IN_COSTS"]),
+    ...mapActions(["SET_NEW_COST_IN_COSTS_ACTION"]),
 
     sendNewCost() {
       const { date, category, value } = this;
       if ((date, category, value)) {
-        this.SET_NEW_COST_IN_COSTS({ date, category, value });
+        this.SET_NEW_COST_IN_COSTS_ACTION({ date, category, value });
       }
       this.date = "";
       this.category = "";
@@ -44,7 +45,37 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["GET_OPTIONS"]),
+    ...mapGetters(["GET_OPTIONS", "POPULAR_COSTS"]),
+  },
+  watch: {
+    $route() {
+      this.POPULAR_COSTS.forEach((el) => {
+        if (this.$route.params.id === el.name) {
+          let d = new Date();
+          let curr_date = d.getDate();
+          let curr_month = d.getMonth() + 1;
+          let curr_year = d.getFullYear();
+          let zero = "";
+          let zero2 = "";
+          if (curr_month < 10) {
+            zero = 0;
+          }
+          if (curr_date < 10) {
+            zero2 = 0;
+          }
+          let realDate =
+            curr_year + "-" + zero + curr_month + "-" + zero2 + curr_date;
+          this.date = realDate;
+          if (this.$route.params.id) {
+            this.category = this.$route.params.id.toString();
+          }
+          if (this.$route.query.value) {
+            this.value = this.$route.query.value;
+          }
+          this.sendNewCost();
+        }
+      });
+    },
   },
 };
 </script>
