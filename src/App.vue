@@ -1,26 +1,28 @@
 <template>
-  <div id="app">
+  <v-app>
     <Header />
-    <router-view />
-  </div>
+    <v-main>
+        <router-view />
+    </v-main>
+  </v-app>
 </template>
+
 <script>
-import Header from "./components/Header";
+import { mapActions } from "vuex";
+import Header from "./components/Header.vue";
 export default {
-  name: "App",
-  components: { Header },
+  name: "myvuetify", 
+  components: {
+    Header,
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapActions(["GET_COSTS_FROM_API"]),
+  },
+  created() {
+    this.GET_COSTS_FROM_API;
+  },
 };
 </script>
-
-<style lang="scss">
-* {
-  transition: all 0.3s;
-}
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-</style>
