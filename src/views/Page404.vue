@@ -1,19 +1,16 @@
 <template>
-  <div class="error-page">
-    <h1>404</h1>
-    <h2>Page Not Found</h2>
-  </div>
+  <v-card class="d-flex align-center justify-center error error__page">
+    <h1>ERROR 404</h1>
+  </v-card>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Page404",
+};
 </script>
-
-<style lang="scss" >
-.error-page {
-  & h1,
-  &h2 {
-    font-size: 5rem;
-  }
+<style lang="scss" scoped>
+.error__page {
+  height: 100vh;
 }
 </style>
